@@ -58,36 +58,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
         todoListAdapter = TodoListAdapter(this, arrayOf<TodoItem>())
         displayTodoList.adapter = todoListAdapter
         displayTodoList.layoutManager = LinearLayoutManager(this)
-        displayTodoList.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-                Log.i("a", rv.todoTitle.text.toString())
-            }
-
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                Log.i("c", "d")
-                return true
-            }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                Log.i("e", "f")
-            }
-
-        })
 
         refresh()
     }
 }
 
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    lateinit var bg:LinearLayout
-    lateinit var titleTextView:TextView
+    lateinit var bg: LinearLayout
+    lateinit var titleTextView: TextView
 
 }
 
-class TodoListAdapter(private var context: Context, var todoItems: Array<TodoItem>) : RecyclerView.Adapter<ViewHolder>() {
+class TodoListAdapter(private var context: Context, var todoItems: Array<TodoItem>) :
+    RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemId(position: Int): Long {
         return 0
@@ -98,6 +85,9 @@ class TodoListAdapter(private var context: Context, var todoItems: Array<TodoIte
         val viewHolder = ViewHolder(cell)
         viewHolder.bg = cell.findViewById(R.id.todoBackground)
         viewHolder.titleTextView = cell.findViewById(R.id.todoTitle)
+
+        cell.setOnClickListener { v -> Log.i("debug", v.todoTitle.text.toString()) }
+
         return viewHolder
     }
 
